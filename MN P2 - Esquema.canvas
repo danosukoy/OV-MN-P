@@ -1,0 +1,21 @@
+{
+	"nodes":[
+		{"id":"d557c6f87bcd","type":"text","text":"# 📄 MN P2 — Grupo 4\n\n**Modelamiento numérico transitorio del transporte de calor 1D en el flujo sobre un tubo cilíndrico con difusividad térmica variable**\n\nMétodos Numéricos (CC2104) · Ponce Cegovia, Roger Ivan\nEntrega: 18/10/2026\n\n→ [[MN P2 - Esquema Grupo 4]]\n→ [[MN_P2_Grupo_4.pdf]]","x":760,"y":520,"width":470,"height":300,"color":"2"},
+		{"id":"ec5e57aa067f","type":"text","text":"## 🎯 1. Planteamiento\n\n**Ecuación (1) — advección–difusión 1D transitoria**\n\n```\n∂T/∂t + v ∂T/∂x = ∂/∂x [ α(T) ∂T/∂x ]\nα(T) = α₀ [ 1 + β(T − T₀) ]\n```\n\n- **β ≠ 0 ⇒ no linealidad** (β = 0 recupera el caso lineal)\n- Dirichlet: `T(0,t)=T₁` · `T(L,t)=T_N`\n- Inicial: `T(x,0)=T_N` salvo en `x=0`\n- Supuestos: 1D sobre línea de corriente · `v` constante (flujo no se resuelve)","x":220,"y":150,"width":430,"height":330,"color":"1"},
+		{"id":"38c49394ecd7","type":"text","text":"## ⚙️ 2. Metodología (cadena)\n\n1. **Diferencias finitas** → discretiza el *espacio* (ec. 6), difusión conservativa en puntos medios\n2. **SDIRK4** (5 etapas) → avanza el *tiempo* (ec. 5, 8)\n3. **Newton-Raphson** → resuelve lo *no lineal*, J **tridiagonal** (ec. 4, 7)\n4. **Gauss-Seidel** → resuelve el sistema lineal en cada iteración de NR\n\n**Criterios de fallo:** NR = 20 it · GS = 500 it","x":1350,"y":150,"width":440,"height":350,"color":"4"},
+		{"id":"69197a47955e","type":"text","text":"## 📐 3. Caso base (Tabla 1)\n\n| Parámetro | Valor |\n|---|---|\n| L | 1 m |\n| N | 51 (Δx = 0,02 m) |\n| v | 0,5 m/s |\n| α₀ | 0,01 m²/s |\n| β | 0,2 |\n| h · pasos | 0,01 s × 50 → t = 0,5 s |\n\n**Frente x_f** = donde T = (T₁+T_N)/2 = **50 °C** (interpolación lineal)","x":780,"y":60,"width":430,"height":300,"color":"3"},
+		{"id":"3ebf724a93bb","type":"text","text":"## 📊 4. Resultados\n\n**Caso base (Tabla 2)**\n- Frente `x_f` = **0,4739 m**\n- Newton-Raphson: **787** (≈3,15/etapa)\n- Gauss-Seidel: **9 140** (≈11,6 por NR)\n- Etapas sin convergencia: **0 / 0**\n- Sin oscilaciones; el frente **no alcanza** la pared\n\n**Barrido de β (Tabla 3)**\n\n| β | x_f (m) | G-S | t (s) |\n|---|---|---|---|\n| 0 | 0,2670 | 1 925 | 0,70 |\n| 0,1 | 0,3965 | 6 372 | 2,13 |\n| 0,2 | 0,4739 | 9 140 | 3,39 |\n| 0,4 | 0,5882 | 14 294 | 5,07 |\n\n> El costo creciente lo causa **Gauss-Seidel**, no Newton-Raphson.","x":220,"y":1050,"width":600,"height":550,"color":"5"},
+		{"id":"700aa6a798cd","type":"text","text":"## 🧭 5. Objetivos & pendientes\n\n- [x] **O1** Implementar DF + SDIRK4 + NR + GS → ✅ 0 fallas\n- [ ] **O2** Error máximo vs. solución de referencia\n- [ ] **O3** Barridos de **v, Δx, h** (solo β está hecho)\n- [ ] **O4** Obtener `x_f` por código en cada instante (hoy se lee de la figura)\n\n**Hallazgo:** subir β desplaza el frente más lejos (+120 % con β=0,4) y encarece el cómputo ×7,2.","x":1350,"y":1050,"width":440,"height":400,"color":"6"}
+	],
+	"edges":[
+		{"id":"093bfb5bcbff","fromNode":"ec5e57aa067f","fromSide":"right","toNode":"d557c6f87bcd","toSide":"left","color":"1"},
+		{"id":"aa8bc18c3432","fromNode":"38c49394ecd7","fromSide":"left","toNode":"d557c6f87bcd","toSide":"right","color":"4"},
+		{"id":"b2075b9d0965","fromNode":"69197a47955e","fromSide":"bottom","toNode":"d557c6f87bcd","toSide":"top","color":"3"},
+		{"id":"f597534fe0c1","fromNode":"3ebf724a93bb","fromSide":"top","toNode":"d557c6f87bcd","toSide":"bottom","color":"5"},
+		{"id":"7fd6b696073d","fromNode":"700aa6a798cd","fromSide":"top","toNode":"d557c6f87bcd","toSide":"bottom","color":"6"},
+		{"id":"7514941ee984","fromNode":"ec5e57aa067f","fromSide":"right","toNode":"69197a47955e","toSide":"left","color":"3"},
+		{"id":"aaf6e32249ef","fromNode":"69197a47955e","fromSide":"right","toNode":"38c49394ecd7","toSide":"left","color":"4"},
+		{"id":"2e1a211356b0","fromNode":"38c49394ecd7","fromSide":"bottom","toNode":"700aa6a798cd","toSide":"top","color":"6"},
+		{"id":"142400a2e4e6","fromNode":"700aa6a798cd","fromSide":"left","toNode":"3ebf724a93bb","toSide":"right","color":"5"}
+	]
+}
