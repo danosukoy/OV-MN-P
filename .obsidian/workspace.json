@@ -169,13 +169,23 @@
               "icon": "lucide-list",
               "title": "Esquema"
             }
+          },
+          {
+            "id": "aa095b5bc9af5852",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
           }
-        ]
+        ],
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -185,7 +195,8 @@
       "daily-notes:Abrir la nota de hoy": false,
       "templates:Insertar plantilla": false,
       "command-palette:Abrir paleta de comandos": false,
-      "bases:Crear nueva base": false
+      "bases:Crear nueva base": false,
+      "obsidian-git:Open Git source control": false
     }
   },
   "active": "ab1051114696b68b",
